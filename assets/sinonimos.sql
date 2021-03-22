@@ -1,0 +1,20 @@
+CREATE PUBLIC Review
+FOR AIRBNB.Review; 
+
+CREATE PUBLIC User_airbnb
+FOR AIRBNB.User_airbnb; 
+
+CREATE PUBLIC Place
+FOR AIRBNB.Place; 
+
+CREATE PUBLIC Amenity
+FOR AIRBNB.Amenity; 
+
+CREATE PUBLIC PlaceAmenity
+FOR AIRBNB.PlaceAmenity; 
+
+CREATE PUBLIC State
+FOR AIRBNB.State; 
+
+CREATE PUBLIC City
+FOR AIRBNB.City; 

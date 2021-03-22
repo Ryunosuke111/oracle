@@ -1,0 +1,11 @@
+
+
+
+Repositorio: https://github.com/Ryunosuke111/oracle.git
+
+El repositorio cuenta con 4 Carpetas:
+- Users ---> documentos que tienen como extencion .sql y contienen los usuarios creados en la base de datos con sus correspondientes permisos
+- data ---> documentos que tienen como extencion .sql y contienen los datos que se almacenana en cada tabla
+- talbe ---> documentos que tienen como extencion .sql y contienen el codigo de creacion de cada tabla
+- asset ---> documentos que tienen como extencion .sql y contienen el codigo de creacion de cada vista y el codigo de cada consulta
+
