@@ -62,7 +62,13 @@ SELECT employees.manager_id, employees.employee_id, employees.first_name, depart
 INNER JOIN departments ON departments.manager_id = employees.manager_id;
 
 SELECT DISTINCT departments.department_id, departments.department_name FROM departments 
-INNER JOIN employees ON employees.department_id = departments.department_id and employees.salary > 3000; 
+INNER JOIN employees ON employees.department_id = departments.department_id and employees.salary > 3000;
+
+SELECT DISTINCT d.department_id, d.department_name FROM departments d 
+INNER JOIN (SELECT department_id as departamento FROM employees GROUP BY department_id HAVING COUNT(employee_id)>2) ON d.department_id=departamento
+INNER JOIN employees e ON d.department_id=e.department_id WHERE e.salary>2500; 
+
+
 
 
 
