@@ -9,7 +9,7 @@ SELECT * FORM employees ORDER BY first_name, last_name;
 
 # C
 
-SELECT * FORM employees WHERE first_name LIKE 'K%';
+SELECT * FROM employees WHERE first_name LIKE 'K%';
 
 # D
 
@@ -17,16 +17,16 @@ SELECT * FROM employees WHERE first_name LIKE 'K%'  ORDER BY first_name;
 
 # E
 
-SELECT department_id, COUNT(employee_id) FROM employees GROUP BY department_id;
+SELECT department_id, COUNT(department_id) FROM employees GROUP BY department_id;
 
 # F
 
-SELECT max(count(employee_id))as empleados FROM employees GROUP BY department_id ;
+SELECT max(count(department_id))as empleados FROM employees GROUP BY department_id ;
 
 # G
 
 SELECT employees.employee_id, employees.first_name, departments.department_name FROM employees 
-INNER JOIN departments ON departments.department_id = employees.employee_id;
+INNER JOIN departments ON departments.department_id = employees.department_id;
 
 # H
 
@@ -122,10 +122,19 @@ INNER JOIN (SELECT employees.employee_id as jefe_id, employees.department_id as 
 INNER JOIN departments ON employees.manager_id = departments.manager_id) ON employees.employee_id <> jefe_id
 WHERE employees.department_id = jefe_dep AND employees.salary > jefe_salary AND employees.manager_id <>jefe_man ORDER BY employees.employee_id;
 
-#t
+# t
 SELECT departments.department_id,departments.department_name, COUNT(employees.employee_id) FROM employees, departments
 WHERE departments.department_id = employees.department_id and employees.salary > 3000 
 GROUP BY departments.department_id, departments.department_name ;
+
+# u
+
+SELECT departments.department_id, departments.department_name
+FROM employees, departments
+WHERE employees.department_id = departments.department_id
+GROUP BY departments.department_id, departments.department_name
+HAVING COUNT(departments.department_id)=
+(SELECT COUNT(*) FROM employees emp WHERE emp.department_id = departments.department_id AND emp.salary > 3000);
 
 
 
