@@ -122,6 +122,12 @@ INNER JOIN (SELECT employees.employee_id as jefe_id, employees.department_id as 
 INNER JOIN departments ON employees.manager_id = departments.manager_id) ON employees.employee_id <> jefe_id
 WHERE employees.department_id = jefe_dep AND employees.salary > jefe_salary AND employees.manager_id <>jefe_man ORDER BY employees.employee_id;
 
+#t
+SELECT departments.department_id,departments.department_name, COUNT(employees.employee_id) FROM employees, departments
+WHERE departments.department_id = employees.department_id and employees.salary > 3000 
+GROUP BY departments.department_id, departments.department_name ;
+
+
 
 
 
