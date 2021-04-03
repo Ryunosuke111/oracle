@@ -91,8 +91,9 @@ HAVING COUNT(employee_id) = (SELECT max(count(employee_id)) FROM employees GROUP
 
 # O
 
-SELECT employees.manager_id, employees.employee_id, employees.first_name, departments.department_name FROM employees
-INNER JOIN departments ON departments.manager_id = employees.manager_id;
+ employees.employee_id, employees.first_name, departments.department_name FROM employees , departments 
+ WHERE employees.department_id = departments.department_id AND  employees.employee_id IN
+ (SELECT DISTINCT jefes.manager_id FROM employees jefes);
 
 # P
 
@@ -117,12 +118,15 @@ INNER JOIN employees  ON departments.department_id=employees.department_id WHERE
 
 # S
 
-SELECT DISTINCT employees.employee_id, employees.first_name FROM employees 
-INNER JOIN (SELECT employees.employee_id as jefe_id, employees.department_id as jefe_dep, employees.salary as jefe_salary, employees.manager_id as jefe_man FROM employees  
-INNER JOIN departments ON employees.manager_id = departments.manager_id) ON employees.employee_id <> jefe_id
+SELECT DISTINCT employees.employee_id, employees.first_name FROM employees  
+INNER JOIN (SELECT e.employee_id as jefe_id, e.department_id as jefe_dep, e.salary as jefe_salary, e.manager_id as jefe_man
+FROM employees e, departments d
+WHERE jefe.department_id = d.department_id AND  jefe.employee_id IN (SELECT DISTINCT jefes.manager_id FROM employees jefes))
+ON employees.employee_id <> jefe_id
 WHERE employees.department_id = jefe_dep AND employees.salary > jefe_salary AND employees.manager_id <>jefe_man ORDER BY employees.employee_id;
 
 # t
+
 SELECT departments.department_id,departments.department_name, COUNT(employees.employee_id) FROM employees, departments
 WHERE departments.department_id = employees.department_id and employees.salary > 3000 
 GROUP BY departments.department_id, departments.department_name ;
@@ -136,7 +140,19 @@ GROUP BY departments.department_id, departments.department_name
 HAVING COUNT(departments.department_id)=
 (SELECT COUNT(*) FROM employees emp WHERE emp.department_id = departments.department_id AND emp.salary > 3000);
 
+#v
 
+SELECT d.department_id, d.department_name FROM employees e1, employees e2, departments d 
+WHERE e1.department_id = d.department_id AND e1.manager_id = e2.employee_id AND d.department_id
+IN (SELECT DISTINCT scm,department_id FROM employees scm WHERE scm.salary > 5000 AND scm.employee_id
+IN (SELECT DISTINCT ssce.manager_id FROM employees ssce))
+GROUP BY d.department_id, d.department_name HAVING COUNT(d.department_id) = 
+(SELECT COUNT(*) FROM employees sce WHERE sce.department_id = d.department_id AND sce.salary > 3000);
+
+#W
+
+SELECT * FROM employees WHERE department_id <> 80 AND salary > ANY 
+(SELECT e.salary FROM employees e WHERE e.department_id = 80 ORDER BY department_id);
 
 
 
